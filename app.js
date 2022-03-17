@@ -1,7 +1,7 @@
 const ytdl_core = require('ytdl-core');
 const fs = require('fs');
 const express = require('express');
-const port = 3000;
+const port = process.env.PORT||3000;
 const app = express();
 // ytdl_core.getInfo('https://www.youtube.com/watch?v=RLhuPD2ASKE').then((info)=>console.log(info)).catch(()=>console.log('cannot promise'));
 
