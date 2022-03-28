@@ -22,11 +22,16 @@ app.get('/', (req, res) => {
 })
 
 app.post('/', (req, res) => {
-    let vdourl = req.body.videoURL;
+    let videourl = req.body.videoURL;
     // console.log(req.body.videoURL);
-    ytdl_core.getInfo(vdourl).then((info) => {
+    ytdl_core.getInfo(videourl).then((info) => {
         let fname = `${info.player_response.videoDetails.title}.mp4`||`${Date.now()}.mp4`;
-        res.header('Content-Disposition', `attachment; filename=${fname}`);
+        res.header('Content-Disposition', `attachment; filename=${fname}`); 
+        console.log(fname + '  ----  successfully delivered');
+        /* by content-disposition the content is expected to be displayed inline in the browser, that is, as a Web page or as part of a Web page, or as an attachment, that is downloaded and saved locally
+        // -- src mdn web docs
+        https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition
+        */
         // res.sendFile(__dirname+"/result.html");
         ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
         console.log(fname + '  ----  successfully delivered');
