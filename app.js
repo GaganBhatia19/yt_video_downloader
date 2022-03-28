@@ -29,6 +29,7 @@ app.post('/', (req, res) => {
         res.header('Content-Disposition', `attachment; filename=${fname}`);
         // res.sendFile(__dirname+"/result.html");
         ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
+        console.log(fname + '  ----  successfully delivered');
     }).catch((err) => { 
         res.send("Error Occured can't download, Sorry"); 
         console.log(err);
