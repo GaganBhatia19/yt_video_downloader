@@ -35,9 +35,13 @@ app.post('/', (req, res) => {
         // res.sendFile(__dirname+"/result.html");
         ytdl_core(videourl, { quality: 'highest' }).pipe(res);
         console.log(fname + '  ----  successfully delivered');
-    }).catch((err) => { 
-        res.send("Error Occured can't download, Sorry"); 
-        console.log(err);
+    }).catch(() => { 
+        // res.send("Error Occured can't download, Sorry"); 
+        // console.log(err);
+        let fname = `${Date.now()}.mp4`;
+        res.header('Content-Disposition', `attachment; filename=${fname}`); 
+        console.log(fname + '  ----  successfully delivered');
+        ytdl_core(videourl, { quality: 'highest' }).pipe(res);
     });
 });
 
