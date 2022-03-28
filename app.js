@@ -29,7 +29,10 @@ app.post('/', (req, res) => {
         res.header('Content-Disposition', `attachment; filename=${fname}`);
         // res.sendFile(__dirname+"/result.html");
         ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
-    }).catch(() => res.send("Error Occured can't download, Sorry"));
+    }).catch((err) => { 
+        res.send("Error Occured can't download, Sorry"); 
+        console.log(err);
+    });
 });
 
 app.listen(port, () => console.log(`running at ${port}`));
