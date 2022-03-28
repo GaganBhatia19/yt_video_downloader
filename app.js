@@ -1,7 +1,7 @@
 const ytdl_core = require('ytdl-core');
 const fs = require('fs');
 const express = require('express');
-const port = process.env.PORT||3000;
+const port = process.env.PORT || 3000;
 const app = express();
 // ytdl_core.getInfo('https://www.youtube.com/watch?v=RLhuPD2ASKE').then((info)=>console.log(info)).catch(()=>console.log('cannot promise'));
 
@@ -13,22 +13,24 @@ const app = express();
 
 app.use(express.urlencoded());
 
-app.use('/static',express.static('static'));
+app.use('/static', express.static('static'));
 
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
     // res.status(200).send('connected to server');
-    res.status(200).sendFile(__dirname+'/landpage.html');
+    res.status(200).sendFile(__dirname + '/landpage.html');
 })
 
-app.post('/',(req,res)=>{
+app.post('/', (req, res) => {
     let vdourl = req.body.videoURL;
     // console.log(req.body.videoURL);
-    let fname = `${Date.now()}.mp4`;
-    res.header('Content-Disposition',`attachment; filename=${fname}`);
-    // res.sendFile(__dirname+"/result.html");
-    ytdl_core(vdourl,{quality:'highest'}).pipe(res);
-})
+    ytdl_core.getInfo(vdourl).then((info) => {
+        let fname = `${info.player_response.videoDetails.title}.mp4`;
+        res.header('Content-Disposition', `attachment; filename=${fname}`);
+        // res.sendFile(__dirname+"/result.html");
+        ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
+    }).catch(() => res.send("Error Occured can't download, Sorry"));
+});
 
-app.listen(port,()=>console.log(`running at ${port}`));
+app.listen(port, () => console.log(`running at ${port}`));
 
