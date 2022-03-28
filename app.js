@@ -25,7 +25,7 @@ app.post('/', (req, res) => {
     let vdourl = req.body.videoURL;
     // console.log(req.body.videoURL);
     ytdl_core.getInfo(vdourl).then((info) => {
-        let fname = `${info.player_response.videoDetails.title}.mp4`;
+        let fname = `${info.player_response.videoDetails.title}.mp4`||`${Date.now()}.mp4`;
         res.header('Content-Disposition', `attachment; filename=${fname}`);
         // res.sendFile(__dirname+"/result.html");
         ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
