@@ -33,7 +33,7 @@ app.post('/', (req, res) => {
         https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Disposition
         */
         // res.sendFile(__dirname+"/result.html");
-        ytdl_core(vdourl, { quality: 'highest' }).pipe(res);
+        ytdl_core(videourl, { quality: 'highest' }).pipe(res);
         console.log(fname + '  ----  successfully delivered');
     }).catch((err) => { 
         res.send("Error Occured can't download, Sorry"); 
